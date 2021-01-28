@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 /**
  * @author github.com/SWP360
+ * @since 28/1/2021
  */
 
 public class EventBus {
@@ -49,7 +50,7 @@ public class EventBus {
             // Make sure function has arguments to accept
             if (method.getParameterCount() > 0) {
                 // Make sure it has @SWPHandler
-                if (method.getAnnotations()[0].toString().toLowerCase().contains("swphandler")) {
+                if (method.isAnnotationPresent(SWPHandler.class)) {
                     try {
                         // Invokes the function with the event
                         method.invoke(listener, arg);
