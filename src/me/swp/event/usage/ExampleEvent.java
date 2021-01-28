@@ -3,6 +3,11 @@ package me.swp.event.usage;
 import me.swp.event.Cancellable;
 import me.swp.event.SWPEvent;
 
+/**
+ * @author github.com/SWP360
+ * @since 28/1/2021
+ */
+
 public class ExampleEvent extends SWPEvent implements Cancellable {
     public boolean cancelled = false;
     private String text;
