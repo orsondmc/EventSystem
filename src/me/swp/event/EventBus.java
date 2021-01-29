@@ -45,17 +45,15 @@ public class EventBus {
      * </pre>
      */
     public void dispatch(SWPEvent arg) {
-        // Loop over the methods ("functions")
         listeners.forEach(listener -> Arrays.stream(listener.getClass().getDeclaredMethods()).forEach(method -> {
-            // Make sure function has arguments to accept
             if (method.getParameterCount() > 0) {
-                // Make sure it has @SWPHandler
                 if (method.isAnnotationPresent(SWPHandler.class)) {
-                    try {
-                        // Invokes the function with the event
-                        method.invoke(listener, arg);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                    if (method.getParameters()[0].getType().getName().equals(arg.getClass().getName())) {
+                        try {
+                            method.invoke(listener, arg);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
