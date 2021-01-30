@@ -1,8 +1,10 @@
 package me.swp.event;
 
-import java.util.List;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.ConcurrentModificationException;
+import java.util.List;
 
 /**
  * @author github.com/SWP360
@@ -23,14 +25,20 @@ public class EventBus {
      * Registers a class to receiving events.
      */
     public void register(Object clazz) {
-        listeners.add(clazz);
+        try {
+            listeners.add(clazz);
+        } catch (ConcurrentModificationException ignored) {
+        }
     }
 
     /**
      * Unregisters a class from receiving events.
      */
     public void unregister(Object clazz) {
-        listeners.remove(clazz);
+        try {
+            listeners.remove(clazz);
+        } catch (ConcurrentModificationException ignored) {
+        }
     }
 
     /**
@@ -51,8 +59,7 @@ public class EventBus {
                     if (method.getParameters()[0].getType().getName().equals(arg.getClass().getName())) {
                         try {
                             method.invoke(listener, arg);
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        } catch (ConcurrentModificationException | IllegalAccessException | InvocationTargetException ignored) {
                         }
                     }
                 }
