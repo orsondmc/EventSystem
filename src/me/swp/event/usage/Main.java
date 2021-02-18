@@ -8,14 +8,13 @@ import me.swp.event.EventBus;
  */
 
 public class Main {
-    public static EventBus EVENT_BUS;
 
     public static void main(String[] args) {
-        EVENT_BUS = new EventBus();
-        EVENT_BUS.register(new SampleModule());
+        EventBus bus = new EventBus();
+        bus.register(new SampleModule());
 
         ExampleEvent event = new ExampleEvent(20, "Hello!");
-        EVENT_BUS.dispatch(event);
+        bus.dispatch(event);
         System.out.println(event.isEventCancelled());
     }
 }
