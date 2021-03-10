@@ -44,6 +44,7 @@ public class EventBus {
         try {
             listeners.remove(clazz);
         } catch (ConcurrentModificationException ignored) {
+            throw new ConcurrentCopingException();
         }
     }
 
@@ -64,6 +65,7 @@ public class EventBus {
                 try {
                     method.invoke(key, arg);
                 } catch (ConcurrentModificationException | IllegalAccessException | InvocationTargetException ignored) {
+                    throw new ConcurrentCopingException();
                 }
             }
         }));
