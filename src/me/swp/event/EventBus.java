@@ -32,6 +32,9 @@ public class EventBus {
                 if (method.isAnnotationPresent(SWPHandler.class)) {
                     results.add(method);
                 }
+            } else {
+                // :troll:
+                throw new CopeOverflowError();
             }
         });
         listeners.put(clazz, results);
